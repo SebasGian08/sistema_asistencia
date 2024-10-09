@@ -41,9 +41,9 @@
                 </style>
                 <div class="content_titulo_login">
                     {{-- <img src="https://grupocodware.com/images/logo-2.webp" alt="Logo">
-                    <p class="title_">Registro de Asistencia</p>
+                    <p class="title_" style="font-size:15px;">REGISTRO DE ASISTENCIA</p>
                     <div class="reloj">
-                        <p class="fecha"></p>
+                        <p class="fecha" style="text-transform: uppercase;"></p>
                         <p class="tiempo"></p>
                     </div> --}}
 
