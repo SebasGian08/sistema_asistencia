@@ -33,8 +33,6 @@ class AsistenciaController extends Controller
         return view('auth.asistencia.listado' , compact('celulas'));
     }
 
-
-
     public function list_all(Request $request)
     {
         $query = Asistencia::orderby('id', 'desc');
@@ -44,26 +42,31 @@ class AsistenciaController extends Controller
             $query->whereBetween('created_at', [$request->input('desde'), $request->input('hasta')]);
         }
 
-        // Filtrar por DNI
+
         if ($request->has('dni') && !empty($request->input('dni'))) {
             $query->where('dni', $request->input('dni'));
         }
 
+        // Obtención de datos
         $asistencias = $query->get()->map(function ($asistencia) {
-            $empleado = Empleado::where('dni', $asistencia->dni)->first();
-        
+            $empleado = Empleado::with('horario')->where('dni', $asistencia->dni)->first();
+
             return [
                 'id' => $asistencia->id,
                 'empleado' => $empleado ? [
                     'dni' => $empleado->dni,
                     'nombre' => $empleado->nombre,
                     'apellido' => $empleado->apellido,
+                    'horario_id' => $empleado->horario_id,
+                    'horario' => $empleado->horario ? $empleado->horario->ingreso : null,
+                    'cargo_id' => $empleado->cargo_id,
+                    'cargo' => $empleado->cargo ? $empleado->cargo->nombre : null,
                 ] : null,
+
                 'hora_entrada' => $asistencia->hora_entrada,
                 'hora_salida' => $asistencia->hora_salida,
                 'total_horas' => $asistencia->total_horas,
                 'created_at' => $asistencia->created_at,
-                // Campos adicionales
                 'latitud' => $asistencia->latitud,
                 'longitud' => $asistencia->longitud,
                 'latitud_salida' => $asistencia->latitud_salida,
@@ -75,6 +78,8 @@ class AsistenciaController extends Controller
 
         return response()->json(['data' => $asistencias]);
     }
+
+
 
     
 

@@ -10,7 +10,7 @@ class Empleado extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'id','dni','nombre','apellido','cargo_id','tel','email'
+        'id','dni','nombre','apellido','cargo_id','tel','email','horario_id'
     ];
 
     public $timestamps = false;
@@ -20,5 +20,15 @@ class Empleado extends Model
     public function cargo()
     {
         return $this->belongsTo(Cargo::class);
+    }
+
+    public function horario()
+    {
+        return $this->belongsTo(Horario::class);
+    }
+
+    public function avatar()
+    {
+        return $this->belongsTo(Avatar::class);
     }
 }

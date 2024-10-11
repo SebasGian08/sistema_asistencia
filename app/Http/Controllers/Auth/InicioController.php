@@ -27,9 +27,10 @@ class InicioController extends Controller
         
             // Obtener datos filtrados por fechas
             $totalEmpleados = $this->getTotalDeEmpleados($fechaDesde, $fechaHasta);
-
+            $totalCargos = $this->getTotalCargos($fechaDesde, $fechaHasta);
         
             $getTopFaltasPorEmpleado = $this->getTopFaltasPorEmpleado($fechaDesde, $fechaHasta);
+            $getTopFaltas = $this->getTopFaltas($fechaDesde,$fechaHasta);
 
         
             // Pasar los datos a la vista 'auth.inicio.index'
@@ -37,7 +38,7 @@ class InicioController extends Controller
                 Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_ADMINISTRADOR ||
                 Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_LIDER
                 ) {
-                return view('auth.inicio.index', compact('totalEmpleados', 'getTopFaltasPorEmpleado',
+                return view('auth.inicio.index', compact('totalEmpleados', 'getTopFaltasPorEmpleado','getTopFaltas','totalCargos',
                     'fechaDesde', 'fechaHasta'));
             }
         
@@ -55,17 +56,16 @@ class InicioController extends Controller
                 ->count();
         }
     
-       /*  private function getTotalCelulas($fecha_desde, $fecha_hasta)
+        private function getTotalCargos($fecha_desde, $fecha_hasta)
         {
-            return DB::table('celulas')
+            return DB::table('cargos')
                 ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
-                ->where('estado', '=', 1) // Filtrar por estado igual a 1
-                ->whereNull('deleted_at') // no contar con los eliminados
+                ->whereNull('deleted_at') // no contar con los eliminadoss
                 ->count();
         }
     
     
-        private function getTotalActividades($fecha_desde, $fecha_hasta)
+        /* private function getTotalActividades($fecha_desde, $fecha_hasta)
         {
             return DB::table('calendarios')
                 ->where('estado', '=', 1) // Filtrar por estado igual a 1
@@ -74,7 +74,7 @@ class InicioController extends Controller
                 ->count();
         } */
     
-        // primer grafico
+        // primer grafico tardanzas
         private function getTopFaltasPorEmpleado($fecha_desde, $fecha_hasta)
         {
             return DB::table('asistencias as a')
@@ -89,6 +89,24 @@ class InicioController extends Controller
                 ->limit(10)
                 ->get();
         }
+
+
+        // segundo grafico tardanzas
+        private function getTopFaltas($fecha_desde, $fecha_hasta)
+        {
+            return DB::table('asistencias as a')
+                ->whereBetween('a.created_at', [$fecha_desde, $fecha_hasta])
+                ->join('empleados as e', 'a.dni', '=', 'e.dni')
+                ->whereNull('a.hora_entrada') // Considerar solo faltas cuando hora_entrada es NULL
+                ->where('estado', '1') 
+                ->whereNull('a.deleted_at') // Excluye asistencias eliminadas
+                ->selectRaw('e.dni as empleado, e.nombre, COUNT(*) as faltas')
+                ->groupBy('e.dni', 'e.nombre')
+                ->orderBy('faltas', 'desc')
+                ->limit(10)
+                ->get();
+        }
+        
 
         
 

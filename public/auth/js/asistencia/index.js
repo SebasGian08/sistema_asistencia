@@ -45,7 +45,7 @@ $(function () {
                 },
             },
             {
-                title: "Nombre",
+                title: "Nombres y Apellidos",
                 data: "empleado",
                 class: "text-center",
                 render: function (data) {
@@ -53,20 +53,33 @@ $(function () {
                 },
             },
             {
+                title: "Cargo",
+                data: "empleado",
+                class: "text-center",
+                render: function (data) {
+                    return data ? `${data.cargo} ${data.apellido}` : "-";
+                },
+            },
+            {
                 title: "Hora Entrada",
                 data: "hora_entrada",
                 class: "text-center",
                 render: function (data) {
+                    if (data === null) {
+                        return `<span class="text-rojo">Faltó</span>`;
+                    }
+            
                     const horaEntrada = new Date(`1970-01-01T${data}`);
                     const horaLimite = new Date(`1970-01-01T08:05:00`);
-
+            
                     if (horaEntrada > horaLimite) {
                         return `${formatTime(data)} <span class="text-naranja">Tarde</span>`;
                     }
-
+            
                     return formatTime(data);
                 },
             },
+            
             {
                 title: "Hora Salida",
                 data: "hora_salida",

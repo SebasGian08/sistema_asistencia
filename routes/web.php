@@ -164,6 +164,9 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::get('/partialView/{id}', 'Auth\EmpleadoController@partialView')->name('auth.empleado.create');
         Route::get('/get/{id}', 'Auth\EmpleadoController@get')->name('auth.empleado.get'); // Nueva ruta para obtener un empleado por ID
         Route::post('/update', 'Auth\EmpleadoController@update')->name('auth.empleado.update');
+        Route::get('/generate-carnet', 'Auth\EmpleadoController@generateCarnet')->name('auth.empleado.generateCarnet');
+        Route::get('/partialViewCarnet/{id}', 'Auth\EmpleadoController@partialViewCarnet')->name('auth.empleado.create');
+
     });
     
 
@@ -174,6 +177,16 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::post('/store', 'Auth\CargoController@store')->name('auth.cargo.store');
         Route::get('/partialView/{id}', 'Auth\CargoController@partialView')->name('auth.cargo.create');
         Route::post('/update', 'Auth\CargoController@update')->name('auth.cargo.update');
+    });
+
+
+    Route::group(['prefix' => 'extras'], function () {
+        Route::get('/', 'Auth\ExtrasController@index')->name('auth.extras');
+        Route::get('/list_all', 'Auth\ExtrasController@list_all')->name('auth.extras.list_all');
+        Route::get('/partialView/{id}', 'Auth\ExtrasController@partialView')->name('auth.extras.create');
+        Route::post('/store', 'Auth\ExtrasController@store')->name('auth.extras.store');
+        Route::post('/delete', 'Auth\ExtrasController@delete')->name('auth.extras.delete');
+        Route::post('/update', 'Auth\ExtrasController@update')->name('auth.extras.update');
     });
     
 

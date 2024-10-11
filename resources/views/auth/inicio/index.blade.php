@@ -67,7 +67,7 @@
                         style="background: linear-gradient(to bottom right, #34495e, #536f8b);">
                         <div class="title">
                             <p class="title-text" style="color:rgb(255, 255, 255)">
-                                <i class="fa fa-user"></i> Total de Asistentes
+                                <i class="fa fa-user"></i> Total de Empleados
                                 <span class="icon-up"><i class="fa fa-arrow-up"></i></span>
                             </p>
                         </div>
@@ -87,7 +87,32 @@
                         </div>
                     </div>
                 </div>
-                
+                <div class="col-lg-3 mb-4 zoom-container">
+                    <div class="totales text-center"
+                        style="background: linear-gradient(to bottom right, #34495e, #536f8b);">
+                        <div class="title">
+                            <p class="title-text" style="color:rgb(255, 255, 255)">
+                                <i class="fa fa-user"></i> Total de Cargos
+                                <span class="icon-up"><i class="fa fa-arrow-up"></i></span>
+                            </p>
+                        </div>
+                        <div class="data">
+                            <p id="totalAsistentes" style="color: white">
+                                {{ $totalCargos }}
+                            </p>
+                            <div class="range">
+                                <div class="fill" style="background-color: #00e272 !important;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;"> <!-- Espacio entre contenido principal y enlace -->
+                            <a href="{{ route('auth.cargo') }}" class="ver-mas"
+                                style="color: white; text-decoration: none; margin-top: 10px;">
+                                Ver más <i class="fa fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="row justify-content-center mt-4">
@@ -107,6 +132,12 @@
                         <div id="container"></div>
                     </div>
                 </div>
+                <div class="col-lg-12 mb-4">
+                    <div class="content-header"
+                        style="box-shadow: 0 2px 25px -5px rgba(0, 0, 0, .16), 0 25px 21px -5px rgba(0, 0, 0, .1) !important;">
+                        <div id="faltas"></div>
+                    </div>
+                </div>
             </div>
         </div>
         <br>
@@ -123,6 +154,7 @@
     <script type="text/javascript">
         // Obtener los datos proporcionados por el controlador
         var getTopFaltasPorEmpleado = @json($getTopFaltasPorEmpleado);
+        var getTopFaltas = @json($getTopFaltas);
         console.log(getTopFaltasPorEmpleado);
 
         // Función para transformar datos a números
@@ -158,10 +190,40 @@
             series: [{
                 name: 'Cantidad',
                 data: transformData(
-                getTopFaltasPorEmpleado), // Asegúrate de que este es el formato correcto
+                    getTopFaltasPorEmpleado), // Asegúrate de que este es el formato correcto
                 colorByPoint: true
             }]
         });
+
+        Highcharts.chart('faltas', {
+            chart: {
+                type: 'column' // Cambiado a 'column' para gráfico de barras
+            },
+            title: {
+                text: 'Cantidad de Faltas por Empleado' // Título actualizado
+            },
+            xAxis: {
+                type: 'category', // Eje X como categorías
+                title: {
+                    text: 'Empleados'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Cantidad de Faltas'
+                }
+            },
+            tooltip: {
+                pointFormat: 'Faltas: <b>{point.y}</b>' // Tooltip para mostrar las tardanzas
+            },
+            series: [{
+                name: 'Cantidad',
+                data: transformData(
+                    getTopFaltas),
+                colorByPoint: true
+            }]
+        });
+
 
 
 

@@ -4,29 +4,40 @@ namespace BolsaTrabajo\Http\Controllers\Auth;
 
 use BolsaTrabajo\Empleado;
 use BolsaTrabajo\Cargo;
+use BolsaTrabajo\Horario;
+use BolsaTrabajo\Avatar;
 use Illuminate\Http\Request;
 use BolsaTrabajo\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image; // Asegúrate de importar esto
 
 class EmpleadoController extends Controller
 {
     public function index()
     {
         $cargo = Cargo::all();
-        return view('auth.empleado.index' , compact('cargo'));
+        $horario = Horario::all();
+        return view('auth.empleado.index' , compact('cargo','horario'));
     }
 
     public function list_all()
     {
         try {
             // Obtener todos los empleados, incluyendo la información del cargo
-            $empleados = Empleado::with('cargo')->orderby('id', 'desc')->get();
+            $empleados = Empleado::with('cargo', 'horario', 'avatar')->orderBy('id', 'desc')->get();
+    
+            // Mapear los empleados para agregar la URL del avatar
+            $empleados = $empleados->map(function ($empleado) {
+                $empleado->avatar_url = $empleado->avatar ? asset($empleado->avatar->file_name) : null; // Verifica si existe el avatar
+                return $empleado;
+            });
     
             return response()->json(['data' => $empleados], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al obtener los empleados.'], 500);
         }
     }
+    
 
 
     public function store(Request $request)
@@ -36,12 +47,12 @@ class EmpleadoController extends Controller
             'dni' => 'required|string|max:20|unique:empleados,dni',
             'nombre' => 'required|string|max:100',
             'apellido' => 'required|string|max:100',
-            'cargo_id' => 'required|exists:cargos,id', // Asumiendo que 'cargos' es otra tabla
+            'cargo_id' => 'required|exists:cargos,id',
         ]);
 
         // Crear un nuevo empleado
         $empleado = Empleado::create($request->only([
-            'dni', 'nombre', 'apellido', 'cargo_id', 'tel', 'email'
+            'dni', 'nombre', 'apellido', 'cargo_id', 'tel', 'email','horario_id'
         ]));
 
         // Redirigir o responder con éxito
@@ -63,8 +74,36 @@ class EmpleadoController extends Controller
     {
         $cargo = Cargo::all();
         $Entity = Empleado::find($id);
-        return view('auth.empleado._Editar', ['cargo' => $cargo,'Entity' => $Entity]);
+        $horarios = Horario::all();
+        $avatars = Avatar::all(); // Recuperar todos los avatares
+
+        return view('auth.empleado._Editar', [
+            'cargo' => $cargo,
+            'Entity' => $Entity,
+            'horarios' => $horarios,
+            'avatars' => $avatars // Agregar avatares a la vista
+        ]);
     }
+
+
+    public function partialViewCarnet($id)
+    {
+        $Entity = Empleado::with('cargo', 'avatar')->find($id);
+
+        // Asegúrate de que el empleado existe
+        if (!$Entity) {
+            return response()->json(['error' => 'Empleado no encontrado.'], 404);
+        }
+
+        return view('auth.empleado._Carnet', [
+            'Entity' => $Entity,
+            'horarios' => Horario::all(),
+            'avatars' => Avatar::all()
+        ]);
+    }
+
+
+
 
 
     public function get($id)
@@ -95,6 +134,9 @@ class EmpleadoController extends Controller
             $entity->tel = $request->tel;
             $entity->email = $request->email;
             $entity->estado = $request->estado;
+            $entity->horario_id = $request->horario_id;
+            $entity->avatar_id = $request->avatar_id;
+
 
             if($entity->save()) $status = true;            
         }

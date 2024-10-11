@@ -29,12 +29,28 @@ $(function () {
                     return meta.row + 1; // Número de fila
                 },
             },
+            { 
+                title: "", 
+                data: "avatar_url", 
+                class: "text-center",
+                render: function(data) {
+                    return '<img src="' + data + '" alt="Avatar" style="width:40px; height:40px; border-radius:50%;">';
+                }
+            },
             { title: "Nombre", data: "nombre", class: "text-center" },
             { title: "Apellido", data: "apellido", class: "text-center" },
             { title: "DNI", data: "dni", class: "text-center" },
             { title: "Teléfono", data: "tel", class: "text-center" },
             { title: "Email", data: "email", class: "text-center" },
             { title: "Cargo", data: "cargo.nombre", class: "text-center" }, // Mostrar el nombre del cargo
+            { 
+                title: "Horario", 
+                data: null, 
+                class: "text-center", 
+                render: function(data, type, row) {
+                    return `${row.horario.ingreso} - ${row.horario.salida}`;
+                } 
+            },
             {
                 title: "Estado",
                 data: "estado",
@@ -68,51 +84,23 @@ $(function () {
     $table.on("click", ".btn-generate-barcode", function () {
         var id = $(this).attr("idDato");
         var empleado = $datatableEmpleado.row($(this).parents("tr")).data();
+        invocarModalViewCarnet(id);
 
-        // Mostrar detalles del empleado
-        $("#employeeDetails").html(`
-        <p><strong>Nombre:</strong> ${empleado.nombre} ${empleado.apellido}</p>
-        <p><strong>DNI:</strong> ${empleado.dni}</p>
-    `);
-
-        // Generar el código de barras con el DNI del empleado
-        var barcodeValue = empleado.dni; // O el campo que desees usar
-        JsBarcode(".barcode", barcodeValue, {
-            height: 100,
-            displayValue: true,
-        });
-
-        // Mostrar el modal
-        $("#barcodeModal").modal("show");
     });
 
-    $(document).on("click", "#printBarcodeBtn", function () {
-        // Obtener solo el contenido del código de barras
-        var printContent = $("#barcodeModal").find(".barcode")[0].outerHTML; // Solo el SVG del código de barras
-
-        // Abrir una nueva ventana para imprimir
-        var win = window.open("", "", "height=400,width=600");
-
-        win.document.write(
-            "<html><head><title>Imprimir Código de Barras</title>"
+    function invocarModalViewCarnet(id) {
+        invocarModal(
+            `/auth/empleado/partialViewCarnet/${id ? id : 0}`,
+            function ($modal) {
+                if ($modal.attr("data-reload") === "true")
+                    $datatableEmpleado.ajax.reload(null, false);
+            }
         );
-        win.document.write("<style>");
-        win.document.write(
-            "body { margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }"
-        ); // Centrar contenido
-        win.document.write(".barcode { width: 100%; height: auto; }"); // Asegurar que el SVG ocupe el 100% del ancho
-        win.document.write("</style>");
-        win.document.write("</head><body>");
-        win.document.write(printContent); // Solo imprime el contenido del código de barras
-        win.document.write("</body></html>");
+    }
+    
 
-        win.document.close();
-        win.print();
 
-        // Cierra el modal después de imprimir
-        $("#barcodeModal").modal("hide");
-    });
-
+    
     /* Para abrir modal y editar */
     $table.on("click", ".btn-update", function () {
         const id = $datatableEmpleado.row($(this).parents("tr")).data().id;
@@ -128,6 +116,8 @@ $(function () {
             }
         );
     }
+
+    
 
     $table.on("click", ".btn-delete", function () {
         const id = $(this).attr("idDato");

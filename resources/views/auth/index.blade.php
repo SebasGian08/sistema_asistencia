@@ -134,7 +134,7 @@
                     </a>
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav mt-5">
-                           {{--  <li id="notifications" class="dropdown notifications-menu">
+                            {{--  <li id="notifications" class="dropdown notifications-menu">
                                 <button type="button" class="mt-3 dropdown-toggle btn btn-light" data-toggle="dropdown"
                                     style="margin-top:15px !important;">
                                     <i class="mdi mdi-bell faa-ring animated"></i>
@@ -223,15 +223,33 @@
                                                 class="fa fa-desktop mr-5"></i> Añadir Cargo</a>
                                     </li>
                                 </ul>
-
                             </li>
-                            <li class="nav-item {{ Route::currentRouteName() == 'auth.asistencia' ? 'active' : '' }}">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="active-item-here"></span> <i class="fa fa-address-card"></i>
+                                    <span>Gestión Asistencia</span></a>
+                                <ul class="dropdown-menu multilevel scale-up-left">
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('auth.asistencia') }}"><i
+                                                class="fa fa-clipboard mr-5"></i> Listado de Asistencias</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('auth.extras') }}">
+                                            <i class="fa fa-calendar mr-5"></i> Horas Extras
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            {{-- <li class="nav-item {{ Route::currentRouteName() == 'auth.asistencia' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.asistencia') }}"><span
                                         class="active-item-here"></span>
                                     <i class="fa fa-clipboard mr-5"></i>
                                     <span>Asistencias</span>
                                 </a>
-                            </li>
+                            </li> --}}
                         @endif
 
                         @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR ||
@@ -253,7 +271,7 @@
             </nav>
         </div>
 
-        
+
         @yield('contenido')
         <div class="conta mt-15" style=" padding-right: 0px !important; padding-left: 0px !important;">
 

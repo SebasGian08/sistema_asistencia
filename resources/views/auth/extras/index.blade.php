@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Grupo Codware | Listado de Asistencia</title>
+    <title>Grupo Codware | Horas Extras</title>
 @endsection
 
 @section('styles')
@@ -46,20 +46,19 @@
 
         <section class="content-header">
             <h1>
-                Listado de Asistencia
+                Horas Extras
                 {{-- <small>Mantenimiento</small> --}}
             </h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <button type="button" id="modalRegistrarAsistencia" class="btn-primary"><i class="fa fa-plus"></i>
-                        Registrar
-                        Asistencia</button>
+                    <button type="button" id="modalRegistrarExtras" class="btn-primary"><i class="fa fa-plus"></i>
+                        Registrar Horas Extras</button>
                 </li>
             </ol>
         </section>
         <br>
         <hr>
-        <div class="content-header">
+        {{-- <div class="content-header">
             <div class="form-row">
                 <!-- Filtro Fecha Exacta -->
                 <div class="form-group col-lg-3 col-md-6">
@@ -82,19 +81,19 @@
                 </div>
 
             </div>
-        </div>
+        </div> --}}
         <br>
         <section class="content-header">
             @csrf
             <div class="row">
                 <div class="col-md-12">
-                    <table id="tableAsistencia" width="100%"
+                    <table id="tableExtras" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
-                    <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                    {{-- <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
                         <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
                             <i class="fa fa-file"></i> Reporte de asistencia
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </section>
@@ -108,5 +107,5 @@
 
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/datatables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/dataTables.config.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('auth/js/asistencia/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('auth/js/extras/index.js') }}"></script>
 @endsection

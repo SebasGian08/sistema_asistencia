@@ -10,7 +10,7 @@ class Horario extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'nombre'
+        'id','ingreso','salida'
     ];
 
     public $timestamps = false;

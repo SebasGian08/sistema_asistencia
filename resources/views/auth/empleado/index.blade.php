@@ -122,17 +122,27 @@
                         </div>
 
                         <div class="form-group col-lg-6">
+                            <label for="horario_id" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-calendar"></i> Horario
+                            </label>
+                            <select class="form-control form-control-lg" id="horario_id" name="horario_id" required>
+                                <option value="" disabled selected>Seleccione horario</option>
+                                @foreach ($horario as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->ingreso }} - {{ $item->salida }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group col-lg-12">
                             <label for="email" class="m-0 label-primary" style="font-size: 15px;">
                                 <i class="fa fa-envelope"></i> Email
                             </label>
                             <input autocomplete="off" type="email" class="form-control form-control-lg" id="email"
                                 name="email" placeholder="Ingrese email" required>
                         </div>
-
-
-
                     </div>
-
                     <div class="form-group col-lg-12">
                         <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px;">
                             <i class="fa fa-save"></i> Registrar Empleado
@@ -170,42 +180,7 @@
 
     </div>
 
-    <div id="barcodeModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #007bff;">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <svg class="barcode" width="150" height="50"></svg>
-                    <!-- Tamaño reducido del código de barras -->
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn custom-button" id="printBarcodeBtn">
-                        <i class="fa fa-print"></i> Imprimir QR
-                    </button>
-                    <style>
-                        .custom-button {
-                            background-color: #28a745;
-                            color: white;
-                            border: none;
-                        }
 
-                        .custom-button:hover {
-                            background-color: #218838;
-                        }
-
-                        .modal-footer {
-                            display: flex;
-                            justify-content: center;
-                        }
-                    </style>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 

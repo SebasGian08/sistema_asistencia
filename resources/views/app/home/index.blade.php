@@ -8,6 +8,7 @@
 @endsection
 <script src="https://kit.fontawesome.com/6f8129a9b1.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="{{ asset('app/css/home/login.css') }}">
+
 <section class="section_login">
 
     <div class="content_view_login">
@@ -46,7 +47,6 @@
                         <p class="fecha" style="text-transform: uppercase;"></p>
                         <p class="tiempo"></p>
                     </div> --}}
-
                     <script>
                         function actualizarReloj() {
                             const now = new Date();
@@ -75,10 +75,17 @@
                     <div class="form-group">
                         <label for="dni" class="text-primary-m">DNI</label>
                         <input type="text" id="dni" name="dni"
-                            class="form-control-m {{ $errors->has('dni') ? ' is-invalid' : '' }}" required
-                            placeholder="Introduce tu DNI" value="{{ old('dni') }}">
+                            class="form-control-m {{ $errors->has('dni') ? ' is-invalid' : '' }}"
+                            placeholder="Introduce tu DNI" value="{{ old('dni') }}" required maxlength="8"
+                            pattern="\d*" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                     </div><br>
-                
+                    <script>
+                        document.getElementById('dni').addEventListener('input', function(e) {
+                            this.value = this.value.replace(/[^0-9]/g, ''); // Solo permite números
+                        });
+                    </script>
+
+
                     <div class="form-group">
                         <label for="tipo" class="text-primary-m">Tipo de Registro</label>
                         <select id="tipo_id" name="tipo_id"
@@ -90,20 +97,21 @@
                         </select>
                     </div>
                     <br><br>
-                
+
                     <input type="hidden" name="latitud" id="latitud" required>
                     <input type="hidden" name="longitud" id="longitud" required>
-                
-                    <button type="submit" class="btn-m btn-primary-gradient" style="border-radius:20px;">Registrar</button>
+
+                    <button type="submit" class="btn-m btn-primary-gradient"
+                        style="border-radius:20px;">Registrar</button>
                     <br><br>
-                
+
                     {{-- Mensajes de éxito y error --}}
                     @if (session('success'))
                         <div class="alert alert-success mt-3">
                             <i class="fas fa-check-circle"></i> {{ session('success') }}
                         </div>
                     @endif
-                
+
                     @if ($errors->any())
                         <div class="alert alert-danger mt-3">
                             <i class="fas fa-exclamation-circle"></i>
@@ -113,7 +121,7 @@
                         </div>
                     @endif
                 </form>
-                
+
                 <script>
                     document.getElementById('asistenciaForm').addEventListener('submit', function(event) {
                         if (navigator.geolocation) {
@@ -123,7 +131,9 @@
                                 // Una vez que se hayan capturado las coordenadas, el formulario se envía
                                 event.target.submit();
                             }, function() {
-                                alert('No se pudo obtener la ubicación. Por favor, verifica la configuración de ubicación.');
+                                alert(
+                                    'No se pudo obtener la ubicación. Por favor, verifica la configuración de ubicación.'
+                                    );
                             });
                             event.preventDefault(); // Previene el envío del formulario hasta que se obtengan las coordenadas
                         } else {
@@ -131,7 +141,7 @@
                         }
                     });
                 </script>
-                
+
             </div>
         </div>
     </div>
