@@ -184,9 +184,10 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::get('/', 'Auth\ExtrasController@index')->name('auth.extras');
         Route::get('/list_all', 'Auth\ExtrasController@list_all')->name('auth.extras.list_all');
         Route::get('/partialView/{id}', 'Auth\ExtrasController@partialView')->name('auth.extras.create');
-        Route::post('/store', 'Auth\ExtrasController@store')->name('auth.extras.store');
         Route::post('/delete', 'Auth\ExtrasController@delete')->name('auth.extras.delete');
         Route::post('/update', 'Auth\ExtrasController@update')->name('auth.extras.update');
+        Route::get('/partialViewAgregar/{id}', 'Auth\ExtrasController@partialViewAgregar')->name('auth.extras.create');
+        Route::post('/store', 'Auth\ExtrasController@store')->name('auth.extras.store');
     });
     
 

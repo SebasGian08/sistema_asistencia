@@ -55,7 +55,8 @@
                                 <label for="dni">DNI</label>
                                 <input type="text" class="form-input" name="dni"
                                     value="{{ $Entity ? $Entity->dni : '' }}" id="dni" autocomplete="off"
-                                    required>
+                                    required maxlength="11" pattern="\d*"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                 <span data-valmsg-for="dni" class="text-danger"></span>
                             </div>
 

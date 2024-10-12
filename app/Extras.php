@@ -18,9 +18,9 @@ class Extras extends Model
     protected $dates = ['deleted_at'];
 
     public function empleado()
-{
-    return $this->belongsTo(Empleado::class, 'dni', 'dni'); // Asegúrate de que 'dni' es la clave foránea y en 'Empleado' también
-}
+    {
+        return $this->belongsTo(Empleado::class, 'dni', 'dni'); // Asegúrate de que 'dni' es la clave foránea y en 'Empleado' también
+    }
 
 
 

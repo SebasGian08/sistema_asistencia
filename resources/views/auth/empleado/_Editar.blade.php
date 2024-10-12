@@ -20,7 +20,7 @@
                             </label>
                             <input autocomplete="off" type="text" class="form-control form-control-lg" id="dni"
                                 name="dni" placeholder="Ingrese DNI" value="{{ $Entity ? $Entity->dni : '' }}"
-                                required maxlength="8" pattern="\d*"
+                                required maxlength="11" pattern="\d*"
                                 onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         </div>
                         <script>

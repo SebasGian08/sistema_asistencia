@@ -155,227 +155,96 @@
         // Obtener los datos proporcionados por el controlador
         var getTopFaltasPorEmpleado = @json($getTopFaltasPorEmpleado);
         var getTopFaltas = @json($getTopFaltas);
-        console.log(getTopFaltasPorEmpleado);
+
+        // Verificar los datos en la consola
+        console.log('Datos de faltas por empleado:', getTopFaltasPorEmpleado);
+        console.log('Datos de faltas:', getTopFaltas);
 
         // Función para transformar datos a números
         function transformData(data) {
-            return data.map(item => ({
-                name: item.nombre, // Asegúrate de que el campo se llama correctamente
-                y: item.faltas
-            }));
+            return data.map(item => {
+                const faltas = Number(item.faltas); // Convertir a número
+                if (isNaN(faltas)) {
+                    console.warn(`Valor no numérico encontrado para ${item.nombre}: ${item.faltas}`);
+                    return { name: item.nombre, y: 0 }; // Asignar 0 si no es un número
+                }
+                return {
+                    name: item.nombre,
+                    y: faltas // Asignar el valor convertido
+                };
+            }).filter(item => item.y > 0); // Filtrar datos válidos
         }
 
-        // Configurar el gráfico de Highcharts
-        Highcharts.chart('container', {
-            chart: {
-                type: 'column' // Cambiado a 'column' para gráfico de barras
-            },
-            title: {
-                text: 'Cantidad de Tardanzas por Empleado' // Título actualizado
-            },
-            xAxis: {
-                type: 'category', // Eje X como categorías
-                title: {
-                    text: 'Empleados'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Cantidad de Tardanzas'
-                }
-            },
-            tooltip: {
-                pointFormat: 'Tardanzas: <b>{point.y}</b>' // Tooltip para mostrar las tardanzas
-            },
-            series: [{
-                name: 'Cantidad',
-                data: transformData(
-                    getTopFaltasPorEmpleado), // Asegúrate de que este es el formato correcto
-                colorByPoint: true
-            }]
-        });
+        // Comprobar datos transformados
+        const transformedFaltasPorEmpleado = transformData(getTopFaltasPorEmpleado);
+        const transformedFaltas = transformData(getTopFaltas);
 
-        Highcharts.chart('faltas', {
-            chart: {
-                type: 'column' // Cambiado a 'column' para gráfico de barras
-            },
-            title: {
-                text: 'Cantidad de Faltas por Empleado' // Título actualizado
-            },
-            xAxis: {
-                type: 'category', // Eje X como categorías
+        console.log('Datos transformados de faltas por empleado:', transformedFaltasPorEmpleado);
+        console.log('Datos transformados de faltas:', transformedFaltas);
+
+        // Validar datos antes de graficar
+        if (!transformedFaltasPorEmpleado.length || !transformedFaltas.length) {
+            console.error("No hay datos válidos para graficar.");
+        } else {
+            // Configurar el gráfico de Highcharts para Tardanzas
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'column' // Gráfico de barras
+                },
                 title: {
-                    text: 'Empleados'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Cantidad de Faltas'
-                }
-            },
-            tooltip: {
-                pointFormat: 'Faltas: <b>{point.y}</b>' // Tooltip para mostrar las tardanzas
-            },
-            series: [{
-                name: 'Cantidad',
-                data: transformData(
-                    getTopFaltas),
-                colorByPoint: true
-            }]
-        });
-
-
-
-
-        /* Highcharts.chart('seguimiento', {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Seguimiento por Célula',
-                align: 'center'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            accessibility: {
-                point: {
-                    valueSuffix: '%'
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}: {point.y}'
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                name: 'Cantidad de Seguimientos',
-                colorByPoint: true,
-                data: transformData(seguimientoPorCelula)
-            }]
-        });
-
-        Highcharts.chart('grafico', {
-            chart: {
-                type: 'bar'
-            },
-            title: {
-                align: 'center',
-                text: 'Cantidad de Asistencias por Participante'
-            },
-            xAxis: {
-                type: 'category',
-                title: {
-                    text: 'Participantes'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Cantidad de Asistencias'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.y}'
+                    text: 'Cantidad de Tardanzas por Empleado'
+                },
+                xAxis: {
+                    type: 'category',
+                    title: {
+                        text: 'Empleados'
                     }
-                }
-            },
-            series: [{
-                name: 'Cantidad de Asistencias',
-                colorByPoint: true,
-                data: transformData(asistenciasPresente)
-            }]
-        });
-
-        Highcharts.chart('carreraporcontratado', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                align: 'center',
-                text: 'Cantidad de Inasistencias por Participante'
-            },
-            xAxis: {
-                type: 'category',
-                title: {
-                    text: 'Participantes'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Cantidad de Inasistencias'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.y}'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Cantidad de Tardanzas'
                     }
-                }
-            },
-            series: [{
-                name: 'Cantidad de Contratados',
-                colorByPoint: true,
-                data: transformData(asistenciasAusente)
-            }]
-        });
+                },
+                tooltip: {
+                    pointFormat: 'Tardanzas: <b>{point.y}</b>'
+                },
+                series: [{
+                    name: 'Cantidad',
+                    data: transformedFaltasPorEmpleado, // Datos transformados
+                    colorByPoint: true
+                }]
+            });
 
-        Highcharts.chart('otro', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                align: 'center',
-                text: 'Cantidad de Asistencias por Programa'
-            },
-            xAxis: {
-                type: 'category',
+            // Configurar el gráfico de Highcharts para Faltas
+            Highcharts.chart('faltas', {
+                chart: {
+                    type: 'column' // Gráfico de barras
+                },
                 title: {
-                    text: 'Programa'
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Cantidad de Asistencias'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            plotOptions: {
-                series: {
-                    borderWidth: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.y}'
+                    text: 'Cantidad de Faltas por Empleado'
+                },
+                xAxis: {
+                    type: 'category',
+                    title: {
+                        text: 'Empleados'
                     }
-                }
-            },
-            series: [{
-                name: 'Cantidad de Asistencias',
-                colorByPoint: true,
-                data: transformData(asistenciasPorPrograma)
-            }]
-        }); */
+                },
+                yAxis: {
+                    title: {
+                        text: 'Cantidad de Faltas'
+                    }
+                },
+                tooltip: {
+                    pointFormat: 'Faltas: <b>{point.y}</b>'
+                },
+                series: [{
+                    name: 'Cantidad',
+                    data: transformedFaltas, // Datos transformados
+                    colorByPoint: true
+                }]
+            });
+        }
     </script>
 @endsection
+
+

@@ -58,24 +58,30 @@ $(function () {
                     return `<span class="${statusClass}">${statusText}</span>`;
                 },
             },
-            { title: "Fecha ", data: "created_at" },
+            {
+                title: "Fecha",
+                data: "created_at",
+                render: function (data) {
+                    if (!data) return "-";
+                    const fechaCreacion = new Date(data);
+                    const opciones = { day: 'numeric', month: 'long', year: 'numeric' };
+                    return fechaCreacion.toLocaleDateString('es-ES', opciones);
+                },
+            },
 
             {
                 data: null,
                 defaultContent:
-                    "<button type='button' class='btn btn-secondary btn-xs btn-update' data-toggle='tooltip' title='Actualizar'><i class='fa fa-pencil'></i></button>",
+                    "<div class='btn-group' role='group'>" +
+                        "<button type='button' class='btn btn-secondary btn-sm btn-update mx-1' data-toggle='tooltip' title='Actualizar'><i class='fa fa-pencil'></i></button>" +
+                        "<button type='button' class='btn btn-danger btn-sm btn-delete mx-1' data-toggle='tooltip' title='Eliminar'><i class='fa fa-trash'></i></button>" +
+                    "</div>",
                 orderable: false,
                 searchable: false,
-                width: "26px",
-            },
-            {
-                data: null,
-                defaultContent:
-                    "<button type='button' class='btn btn-danger btn-xs btn-delete' data-toggle='tooltip' title='Eliminar'><i class='fa fa-trash'></i></button>",
-                orderable: false,
-                searchable: false,
-                width: "26px",
-            },
+                width: "90px", // Ajusta el ancho según sea necesario
+            }
+            
+            
         ],
     });
 
@@ -101,13 +107,23 @@ $(function () {
         );
     });
 
-   /*  $("#modalRegistrarCargo").on("click", function () {
-        invocarModalView();
-    }); */
+    $("#modalRegistrarExtras").on("click", function () {
+        invocarModalViewAgregar();
+    });
 
     function invocarModalView(id) {
         invocarModal(
             `/auth/extras/partialView/${id ? id : 0}`,
+            function ($modal) {
+                if ($modal.attr("data-reload") === "true")
+                    $dataTableExtras.ajax.reload(null, false);
+            }
+        );
+    }
+
+    function invocarModalViewAgregar(id) {
+        invocarModal(
+            `/auth/extras/partialViewAgregar/${id ? id : 0}`,
             function ($modal) {
                 if ($modal.attr("data-reload") === "true")
                     $dataTableExtras.ajax.reload(null, false);

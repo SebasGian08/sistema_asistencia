@@ -76,7 +76,7 @@
                         <label for="dni" class="text-primary-m">DNI</label>
                         <input type="text" id="dni" name="dni"
                             class="form-control-m {{ $errors->has('dni') ? ' is-invalid' : '' }}"
-                            placeholder="Introduce tu DNI" value="{{ old('dni') }}" required maxlength="8"
+                            placeholder="Introduce tu DNI" value="{{ old('dni') }}" required maxlength="11"
                             pattern="\d*" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                     </div><br>
                     <script>
