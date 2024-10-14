@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Codware | Registro de Cargo</title>
+    <title>Codware | Registro de Horarios</title>
 @endsection
 
 @section('styles')
@@ -24,7 +24,7 @@
 
         <section class="content-header">
             <h1>
-                {{-- Gestión de Empleados --}}
+                {{-- Horarios --}}
             </h1>
         </section>
 
@@ -60,25 +60,31 @@
                 </div>
             </div>
             <div class="form-row">
-                <form class="col-lg-12 col-md-12" action="{{ route('auth.cargo.store') }}" method="post">
+                <form class="col-lg-12 col-md-12" action="{{ route('auth.horarios.store') }}" method="post">
                     @csrf
                     <div style="display: flex; flex-wrap: wrap;">
                         <div class="form-group col-lg-6">
-                            <label for="nombre" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-check"></i> Nombre de Cargo
+                            <label for="time" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-clock"></i> Ingreso
                             </label>
-                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombre"
-                                name="nombre" placeholder="Ingrese nombre" required>
+                            <input autocomplete="off" type="time" class="form-control form-control-lg" id="ingreso"
+                                name="ingreso" placeholder="Ingrese hora de ingreso" required>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="time_salida" class="m-0 label-primary" style="font-size: 15px;">
+                                <i class="fa fa-clock"></i> Salida
+                            </label>
+                            <input autocomplete="off" type="time" class="form-control form-control-lg" id="salida"
+                                name="salida" placeholder="Ingrese hora de salida" required>
                         </div>
                         <div class="form-group col-lg-6 d-flex align-items-end">
-                            <button type="submit" class="btn btn-primary btn-lg " style="font-size: 16px;">
-                                <i class="fa fa-save"></i> Registrar Cargo
+                            <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px;">
+                                <i class="fa fa-save"></i> Registrar Horario
                             </button>
                         </div>
                     </div>
                 </form>
             </div>
-
         </div>
         <hr>
         <style>
@@ -100,7 +106,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <table id="tableCargo" width="100%"
+                    <table id="tableHorarios" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
                 </div>
             </div>
@@ -112,5 +118,5 @@
 @section('scripts')
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/datatables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/dataTables.config.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('auth/js/cargo/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('auth/js/horarios/index.js') }}"></script>
 @endsection

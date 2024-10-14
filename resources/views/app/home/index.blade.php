@@ -84,8 +84,6 @@
                             this.value = this.value.replace(/[^0-9]/g, ''); // Solo permite números
                         });
                     </script>
-
-
                     <div class="form-group">
                         <label for="tipo" class="text-primary-m">Tipo de Registro</label>
                         <select id="tipo_id" name="tipo_id"

@@ -1,3 +1,7 @@
+
+function clickExcel() {
+    $(".dt-buttons .buttons-excel").click();
+}
 var $dataTableExtras, $dataTable;
 $(function () {
     const $table = $("#tableExtras");
@@ -10,7 +14,14 @@ $(function () {
             [50, 100, 200, 500, "Todo"],
         ],
         info: false,
-        buttons: [],
+        buttons: [
+            {
+                extend: 'excelHtml5',
+                text: 'Exportar a Excel',
+                title: 'Lista de Extras',
+                className: 'btn btn-success' // Clase para estilizar el botón
+            }
+        ],
         ajax: {
             url: "/auth/extras/list_all",
         },
@@ -33,39 +44,33 @@ $(function () {
                 data: "estado",
                 className: "text-center",
                 render: function (data) {
-                    let statusText;
-                    let statusClass;
-
-                    switch (data) {
-                        case 0:
-                            statusText = "Pendiente";
-                            statusClass = "badge badge-warning"; // Color amarillo
-                            break;
-                        case 1:
-                            statusText = "Aprobada";
-                            statusClass = "badge badge-success"; // Color verde
-                            break;
-                        case 2:
-                            statusText = "Rechazado";
-                            statusClass = "badge badge-danger"; // Color rojo
-                            break;
-                        default:
-                            statusText = "Desconocido";
-                            statusClass = "badge badge-secondary"; // Color gris
-                            break;
-                    }
-
-                    return `<span class="${statusClass}">${statusText}</span>`;
+                    const statusMap = {
+                        0: { text: "Pendiente", class: "badge badge-warning" }, // Color amarillo
+                        1: { text: "Aprobada", class: "badge badge-success" }, // Color verde
+                        2: { text: "Rechazado", class: "badge badge-danger" }, // Color rojo
+                    };
+            
+                    const { text = "Desconocido", class: statusClass = "badge badge-secondary" } = statusMap[data] || {};
+            
+                    return `<span class="${statusClass}">${text}</span>`;
                 },
             },
+            
             {
                 title: "Fecha",
                 data: "created_at",
+                class: "text-center",
                 render: function (data) {
-                    if (!data) return "-";
-                    const fechaCreacion = new Date(data);
-                    const opciones = { day: 'numeric', month: 'long', year: 'numeric' };
-                    return fechaCreacion.toLocaleDateString('es-ES', opciones);
+                    if (data) {
+                        const date = new Date(data);
+                        const options = {
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit",
+                        };
+                        return date.toLocaleDateString("es-ES", options);
+                    }
+                    return "-";
                 },
             },
 

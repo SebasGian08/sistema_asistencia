@@ -4,6 +4,7 @@ namespace BolsaTrabajo\Http\Controllers\Auth;
 
 use BolsaTrabajo\Empleado;
 use BolsaTrabajo\Cargo;
+use BolsaTrabajo\Asistencia;
 use BolsaTrabajo\Horario;
 use BolsaTrabajo\Avatar;
 use Illuminate\Http\Request;
@@ -62,12 +63,29 @@ class EmpleadoController extends Controller
     public function delete(Request $request)
     {
         $status = false;
-
-        $entity = Empleado::find($request->id);
-
-        if($entity->delete()) $status = true;
-
-        return response()->json(['Success' => $status]);
+    
+        // Encuentra el evento con el dni proporcionado
+        $event = Empleado::where('id', $request->id)->first();
+    
+        if (!$event) {
+            return response()->json(['Success' => $status, 'Message' => 'Empleado no encontrado.']);
+        }
+    
+        // Verifica si hay asistentes asociados al empleado
+        $hasParticipants = Asistencia::where('dni', $event->dni)->exists();
+    
+        if ($hasParticipants) {
+            return response()->json(['Success' => $status, 'Message' => 'No se puede eliminar el empleado porque tiene registros asociados.']);
+        }
+    
+        // Elimina el empleado si no tiene asistentes asociados
+        if ($event->delete()) {
+            $status = true;
+            return response()->json(['Success' => $status, 'Message' => 'Empleado eliminado exitosamente.']);
+        } else {
+            // Error al intentar eliminar
+            return response()->json(['Success' => $status, 'Message' => 'Error al intentar eliminar el empleado.']);
+        }
     }
 
     public function partialView($id)

@@ -26,8 +26,8 @@ class Celula extends Model
             return $this->belongsTo(User::class, 'lider_id');
         }
         public function asistentes()
-    {
-        return $this->hasMany(Asistentes::class);
-    }
+        {
+            return $this->hasMany(Asistentes::class);
+        }
     
 }

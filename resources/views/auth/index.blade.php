@@ -222,6 +222,9 @@
                                     <li class="nav-item"><a class="nav-link" href="{{ route('auth.cargo') }}"><i
                                                 class="fa fa-desktop mr-5"></i> Añadir Cargo</a>
                                     </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('auth.horarios') }}"><i
+                                                class="fa fa-hourglass mr-5"></i> Añadir Horarios</a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">
@@ -267,6 +270,21 @@
                                 </ul>
                             </li>
                         @endif
+
+                        {{-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <span class="active-item-here"></span> <i class="fa fa-cog"></i>
+                                <span>Configuración</span></a>
+                            <ul class="dropdown-menu multilevel scale-up-left">
+                                <li class="nav-item"><a class="nav-link" href="{{ route('auth.configuracion') }}"><i
+                                            class="fa fa-desktop mr-5"></i> IP</a>
+                                </li>
+
+                            </ul>
+                        </li> --}}
+
+
                 </div>
             </nav>
         </div>

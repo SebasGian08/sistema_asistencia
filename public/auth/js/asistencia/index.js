@@ -139,8 +139,16 @@ $(function () {
                 },
             },
             {
-                title: "IP Address", // New column title for IP
+                title: "IP Entrada", // New column title for IP
                 data: "ip_address", // Change this to match the field name from your API
+                class: "text-center",
+                render: function (data) {
+                    return data ? data : "-"; // Return IP address or a dash if not available
+                },
+            },
+            {
+                title: "IP Salida", // New column title for IP
+                data: "ip_address_salida", // Change this to match the field name from your API
                 class: "text-center",
                 render: function (data) {
                     return data ? data : "-"; // Return IP address or a dash if not available

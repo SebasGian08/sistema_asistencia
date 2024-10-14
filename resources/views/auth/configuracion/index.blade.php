@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Codware | Registro de Cargo</title>
+    <title>Codware | Registro de IP</title>
 @endsection
 
 @section('styles')
@@ -24,7 +24,7 @@
 
         <section class="content-header">
             <h1>
-                {{-- Gestión de Empleados --}}
+                {{-- Gestión de IP --}}
             </h1>
         </section>
 
@@ -60,19 +60,19 @@
                 </div>
             </div>
             <div class="form-row">
-                <form class="col-lg-12 col-md-12" action="{{ route('auth.cargo.store') }}" method="post">
+                <form class="col-lg-12 col-md-12" action="{{ route('auth.configuracion.store') }}" method="post">
                     @csrf
                     <div style="display: flex; flex-wrap: wrap;">
                         <div class="form-group col-lg-6">
                             <label for="nombre" class="m-0 label-primary" style="font-size: 15px;">
-                                <i class="fa fa-check"></i> Nombre de Cargo
+                                <i class="fa fa-check"></i> IP
                             </label>
-                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombre"
-                                name="nombre" placeholder="Ingrese nombre" required>
+                            <input autocomplete="off" type="text" class="form-control form-control-lg" id="numero"
+                                name="numero" placeholder="Ingrese IP" required>
                         </div>
                         <div class="form-group col-lg-6 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary btn-lg " style="font-size: 16px;">
-                                <i class="fa fa-save"></i> Registrar Cargo
+                                <i class="fa fa-save"></i> Registrar
                             </button>
                         </div>
                     </div>
@@ -100,7 +100,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <table id="tableCargo" width="100%"
+                    <table id="tableIP" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
                 </div>
             </div>
@@ -112,5 +112,5 @@
 @section('scripts')
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/datatables.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('auth/plugins/datatable/dataTables.config.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('auth/js/cargo/index.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('auth/js/ip/index.js') }}"></script>
 @endsection

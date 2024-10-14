@@ -88,11 +88,11 @@
                 <div class="col-md-12">
                     <table id="tableExtras" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>
-                    {{-- <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
+                    <div class="form-group col-lg-3 col-md-12 d-flex flex-column">
                         <a href="javascript:void(0)" class="btn-m btn-success-m" onclick="clickExcel()">
-                            <i class="fa fa-file"></i> Reporte de asistencia
+                            <i class="fa fa-file"></i> Reporte
                         </a>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </section>

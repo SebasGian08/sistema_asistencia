@@ -189,6 +189,30 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::get('/partialViewAgregar/{id}', 'Auth\ExtrasController@partialViewAgregar')->name('auth.extras.create');
         Route::post('/store', 'Auth\ExtrasController@store')->name('auth.extras.store');
     });
+
+    Route::group(['prefix' => 'horarios'], function () {
+        Route::get('/', 'Auth\HorariosController@index')->name('auth.horarios');
+        Route::get('/list_all', 'Auth\HorariosController@list_all')->name('auth.horarios.list_all');
+        Route::get('/partialView/{id}', 'Auth\HorariosController@partialView')->name('auth.horarios.create');
+        Route::post('/delete', 'Auth\HorariosController@delete')->name('auth.horarios.delete');
+        Route::post('/update', 'Auth\HorariosController@update')->name('auth.horarios.update');
+        Route::get('/partialViewAgregar/{id}', 'Auth\HorariosController@partialViewAgregar')->name('auth.horarios.create');
+        Route::post('/store', 'Auth\HorariosController@store')->name('auth.horarios.store');
+    });
+
+    Route::group(['prefix' => 'configuracion'], function () {
+        Route::get('/', 'Auth\ConfiguracionController@index')->name('auth.configuracion');
+        Route::post('/store', 'Auth\ConfiguracionController@store')->name('auth.configuracion.store');
+
+
+
+        /* Route::get('/list_all', 'Auth\HorariosController@list_all')->name('auth.horarios.list_all');
+        Route::get('/partialView/{id}', 'Auth\HorariosController@partialView')->name('auth.horarios.create');
+        Route::post('/delete', 'Auth\HorariosController@delete')->name('auth.horarios.delete');
+        Route::post('/update', 'Auth\HorariosController@update')->name('auth.horarios.update');
+        Route::get('/partialViewAgregar/{id}', 'Auth\HorariosController@partialViewAgregar')->name('auth.horarios.create'); */
+        
+    });
     
 
 });

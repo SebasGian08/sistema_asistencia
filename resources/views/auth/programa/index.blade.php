@@ -131,7 +131,7 @@
                 </style>
             </div>
         </div>
-}
+
         <script>
             var numPuestosAgregados = 0;
             var nombresPuestos = ['dos', 'tres', 'cuatro'];
