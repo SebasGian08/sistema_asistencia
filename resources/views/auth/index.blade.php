@@ -203,7 +203,7 @@
                     <ul class="navbar-nav">
                         @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR ||
                                 Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_ADMINISTRADOR ||
-                                Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_LIDER)
+                                Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_SUPERVISOR)
                             <li class="nav-item {{ Route::currentRouteName() == 'auth.inicio' ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('auth.inicio') }}"><span
                                         class="active-item-here"></span>
@@ -245,14 +245,6 @@
 
                                 </ul>
                             </li>
-
-                            {{-- <li class="nav-item {{ Route::currentRouteName() == 'auth.asistencia' ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('auth.asistencia') }}"><span
-                                        class="active-item-here"></span>
-                                    <i class="fa fa-clipboard mr-5"></i>
-                                    <span>Asistencias</span>
-                                </a>
-                            </li> --}}
                         @endif
 
                         @if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR ||
@@ -269,20 +261,21 @@
                                     </li>
                                 </ul>
                             </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <span class="active-item-here"></span> <i class="fa fa-cog"></i>
+                                    <span>Configuración</span>
+                                </a>
+                                <ul class="dropdown-menu multilevel scale-up-left">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('auth.configuracion') }}">
+                                            <i class="fa fa-desktop mr-5"></i> IP
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         @endif
-
-                        {{-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <span class="active-item-here"></span> <i class="fa fa-cog"></i>
-                                <span>Configuración</span></a>
-                            <ul class="dropdown-menu multilevel scale-up-left">
-                                <li class="nav-item"><a class="nav-link" href="{{ route('auth.configuracion') }}"><i
-                                            class="fa fa-desktop mr-5"></i> IP</a>
-                                </li>
-
-                            </ul>
-                        </li> --}}
 
 
                 </div>

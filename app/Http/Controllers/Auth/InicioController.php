@@ -28,6 +28,7 @@ class InicioController extends Controller
             // Obtener datos filtrados por fechas
             $totalEmpleados = $this->getTotalDeEmpleados($fechaDesde, $fechaHasta);
             $totalCargos = $this->getTotalCargos($fechaDesde, $fechaHasta);
+            $totalAsistencias = $this->getTotalAsistencias($fechaDesde, $fechaHasta);
         
             $getTopFaltasPorEmpleado = $this->getTopFaltasPorEmpleado($fechaDesde, $fechaHasta);
             $getTopFaltas = $this->getTopFaltas($fechaDesde,$fechaHasta);
@@ -36,9 +37,9 @@ class InicioController extends Controller
             // Pasar los datos a la vista 'auth.inicio.index'
             if (Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_DESARROLLADOR ||
                 Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_ADMINISTRADOR ||
-                Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_LIDER
+                Auth::guard('web')->user()->profile_id == \BolsaTrabajo\App::$PERFIL_SUPERVISOR
                 ) {
-                return view('auth.inicio.index', compact('totalEmpleados', 'getTopFaltasPorEmpleado','getTopFaltas','totalCargos',
+                return view('auth.inicio.index', compact('totalEmpleados', 'getTopFaltasPorEmpleado','getTopFaltas','totalCargos','totalAsistencias',
                     'fechaDesde', 'fechaHasta'));
             }
         
@@ -65,14 +66,13 @@ class InicioController extends Controller
         }
     
     
-        /* private function getTotalActividades($fecha_desde, $fecha_hasta)
+        private function getTotalAsistencias($fecha_desde, $fecha_hasta)
         {
-            return DB::table('calendarios')
-                ->where('estado', '=', 1) // Filtrar por estado igual a 1
+            return DB::table('asistencias')
                 ->whereBetween('created_at', [$fecha_desde, $fecha_hasta])
                 ->whereNull('deleted_at') // no contar con los eliminados
                 ->count();
-        } */
+        }
     
         // primer grafico tardanzas
         private function getTopFaltasPorEmpleado($fecha_desde, $fecha_hasta)
@@ -80,7 +80,8 @@ class InicioController extends Controller
             return DB::table('asistencias as a')
                 ->whereBetween('a.created_at', [$fecha_desde, $fecha_hasta])
                 ->join('empleados as e', 'a.dni', '=', 'e.dni')
-                ->where('a.hora_entrada', '>', '08:05') // Tardanza o falta
+                ->join('horarios as h', 'e.horario_id', '=', 'h.id') // Únete a la tabla de horarios
+                ->where('a.hora_entrada', '>', DB::raw('h.ingreso')) // Comparar con el horario de ingreso
                 ->where('estado', '1') 
                 ->whereNull('a.deleted_at') // Excluye asistencias eliminadas
                 ->selectRaw('e.dni as empleado, e.nombre, COUNT(*) as faltas')
@@ -89,6 +90,7 @@ class InicioController extends Controller
                 ->limit(10)
                 ->get();
         }
+
 
 
         // segundo grafico tardanzas

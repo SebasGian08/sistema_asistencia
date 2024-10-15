@@ -60,23 +60,35 @@ $(function () {
                     return data ? `${data.cargo} ${data.apellido}` : "-";
                 },
             },
+
             {
                 title: "Hora Entrada",
                 data: "hora_entrada",
                 class: "text-center",
-                render: function (data) {
-                    if (data === null) {
-                        return `<span class="text-rojo">Faltó</span>`;
+                render: function (data, type, row) {
+                    if (data === null || typeof data !== 'string') {
+                        return `<span class="text-rojo"> Faltó</span>`;
                     }
             
                     const horaEntrada = new Date(`1970-01-01T${data}`);
-                    const horaLimite = new Date(`1970-01-01T08:05:00`);
+                    
+                    // Acceder al horario completo
+                    const horario = row.empleado.horario; // Asegúrate de que esto esté presente
             
-                    if (horaEntrada > horaLimite) {
-                        return `${formatTime(data)} <span class="text-naranja">Tarde</span>`;
+                    if (!horario) {
+                        return `<span class="text-rojo"> Sin horario</span>`;
                     }
             
-                    return formatTime(data);
+                    // Usa el horario de ingreso para crear horaLimite
+                    const horaLimite = new Date(`1970-01-01T${horario}`);
+                    const formattedEntrada = formatTime(data);
+            
+                    // Comparar horaEntrada con horaLimite
+                    if (horaEntrada > horaLimite) {
+                        return `${formattedEntrada} <span class="text-naranja"> Tarde</span>`;
+                    }
+            
+                    return formattedEntrada;
                 },
             },
             
@@ -191,13 +203,18 @@ $(function () {
     });
 
     function formatTime(timeString) {
+        if (!timeString || typeof timeString !== 'string') {
+            return "Formato Inválido"; // O cualquier mensaje que desees mostrar
+        }
+    
         const [hours, minutes, seconds] = timeString.split(":").map(Number);
         const isPM = hours >= 12;
         const formattedHours = hours % 12 || 12;
         const ampm = isPM ? "PM" : "AM";
-
+    
         return `${formattedHours}:${String(minutes).padStart(2, "0")} ${ampm}`;
     }
+    
 
     $("#modalRegistrarAsistencia").on("click", function () {
         invocarModalView();

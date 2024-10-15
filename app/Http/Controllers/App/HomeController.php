@@ -114,7 +114,7 @@ class HomeController extends Controller
         $ipAddress = $request->ip();
 
         // Obtener las IPs permitidas desde la tabla configuracion
-        $allowedIps = Configuracion::pluck('numero')->toArray(); // Obtener todas las IPs como un array
+        $allowedIps = Configuracion::where('estado', 1)->pluck('numero')->toArray(); // Obtener todas las IPs como un array
 
         // Verificar si la IP del cliente está permitida
         if (!in_array($ipAddress, $allowedIps)) {

@@ -64,15 +64,15 @@
                 <!-- Filtro Fecha Exacta -->
                 <div class="form-group col-lg-3 col-md-6">
                     <label for="desde" class="m-0 label-primary">Desde</label>
-                    <input type="date" class="form-control-m form-control-sm" id="desde" value="{{ Date('Y-m-d') }}">
+                    <input type="date" class="form-control-m form-control-lg" id="desde" value="{{ Date('2020-m-d') }}">
                 </div>
                 <div class="form-group col-lg-3 col-md-6">
                     <label for="hasta" class="m-0 label-primary">Hasta</label>
-                    <input type="date" class="form-control-m form-control-sm" id="hasta" value="{{ Date('Y-m-d') }}">
+                    <input type="date" class="form-control-m form-control-lg" id="hasta" value="{{ Date('Y-m-d') }}">
                 </div>
                 <div class="form-group col-lg-3 col-md-6">
                     <label for="dni" class="m-0 label-primary">Buscar por DNI</label>
-                    <input type="text" class="form-control-m form-control-sm" id="dni" placeholder="Ingrese DNI">
+                    <input type="text" class="form-control-m form-control-lg" id="dni" placeholder="Ingrese DNI">
                 </div>
                 <div class="form-group col-lg-2 col-md-6">
                     <label class="m-0 label-primary">&nbsp;</label>

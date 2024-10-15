@@ -112,6 +112,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3 mb-4 zoom-container">
+                    <div class="totales text-center"
+                        style="background: linear-gradient(to bottom right, #34495e, #536f8b);">
+                        <div class="title">
+                            <p class="title-text" style="color:rgb(255, 255, 255)">
+                                <i class="fa fa-user"></i> Total de Asistencias
+                                <span class="icon-up"><i class="fa fa-arrow-up"></i></span>
+                            </p>
+                        </div>
+                        <div class="data">
+                            <p id="totalAsistencias" style="color: white">
+                                {{ $totalAsistencias }}
+                            </p>
+                            <div class="range">
+                                <div class="fill" style="background-color: #00e272 !important;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;"> <!-- Espacio entre contenido principal y enlace -->
+                            <a href="{{ route('auth.asistencia') }}" class="ver-mas"
+                                style="color: white; text-decoration: none; margin-top: 10px;">
+                                Ver más <i class="fa fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </div>
