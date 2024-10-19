@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>JAC | Registro de Usuarios</title>
+    <title>Registro de Usuarios</title>
 @endsection
 
 @section('styles')
@@ -14,7 +14,6 @@
         <section class="content-header">
             <h1>
                 Listado de Usuarios
-                <small>Mantenimiento</small>
             </h1>
 
             <ol class="breadcrumb">

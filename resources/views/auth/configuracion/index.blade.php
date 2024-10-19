@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Codware | Registro de IP</title>
+    <title>Registro de IP</title>
 @endsection
 
 @section('styles')
@@ -60,7 +60,8 @@
                 </div>
             </div>
             <div class="form-row">
-                <form class="col-lg-12 col-md-12" action="{{ route('auth.configuracion.store') }}" method="post" onsubmit="return validateIP()">
+                <form class="col-lg-12 col-md-12" action="{{ route('auth.configuracion.store') }}" method="post"
+                    onsubmit="return validateIP()">
                     @csrf
                     <div style="display: flex; flex-wrap: wrap;">
                         <div class="form-group col-lg-6">
@@ -68,7 +69,8 @@
                                 <i class="fa fa-check"></i> IP
                             </label>
                             <input autocomplete="off" type="text" class="form-control form-control-lg" id="numero"
-                                name="numero" placeholder="Ingrese IP" required pattern="^(\d{1,3}\.){3}\d{1,3}$" title="Formato: xxx.xxx.xxx.xxx">
+                                name="numero" placeholder="Ingrese IP" required pattern="^(\d{1,3}\.){3}\d{1,3}$"
+                                title="Formato: xxx.xxx.xxx.xxx">
                         </div>
                         <div class="form-group col-lg-6 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px;">
@@ -77,22 +79,27 @@
                         </div>
                     </div>
                 </form>
-                
+
 
                 {{-- formato ip --}}
                 <script>
                     function validateIP() {
                         const ipInput = document.getElementById('numero');
-                        const ipPattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-                
+                        const ipPattern =
+                            /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+
                         if (!ipPattern.test(ipInput.value)) {
                             alert('Por favor, ingrese una dirección IP válida.');
                             return false;
                         }
                         return true;
                     }
+
+                    document.addEventListener("DOMContentLoaded", function() {
+                        document.getElementById("numero").focus();
+                    });
                 </script>
-                
+
             </div>
 
         </div>
@@ -118,9 +125,10 @@
                     <div class="alert alert-success" role="alert">
                         <span class="fa fa-check-circle"></span> <!-- Icono de check -->
                         <strong>¡Atención!</strong> Asegúrate de verificar la IP de tu computadora.
-                        <strong><a href="https://www.whatismyip.com/" target="_blank">https://www.whatismyip.com/</a></strong>
+                        <strong><a href="https://www.whatismyip.com/"
+                                target="_blank">https://www.whatismyip.com/</a></strong>
                     </div>
-                </div>                
+                </div>
                 <div class="col-md-12">
                     <table id="tableIP" width="100%"
                         class='table dataTables_wrapper container-fluid dt-bootstrap4 no-footer'></table>

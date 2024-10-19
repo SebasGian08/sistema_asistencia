@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>JAC | Inicio</title>
+    <title>Inicio</title>
 @endsection
 
 @section('styles')

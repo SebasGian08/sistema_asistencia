@@ -41,7 +41,9 @@
                     }
                 </style>
                 <div class="content_titulo_login">
-                    <img src="https://grupocodware.com/images/logo-2.webp" alt="Logo">
+                    @if ($empresa && $empresa->logo)
+                        <img src="{{ asset($empresa->logo) }}" alt="JAC" style="width:80px;">
+                    @endif
                     <p class="title_" style="font-size:15px;">REGISTRO DE ASISTENCIA</p>
                     <div class="reloj">
                         <p class="fecha" style="text-transform: uppercase;"></p>
@@ -134,7 +136,7 @@
                             }, function() {
                                 alert(
                                     'No se pudo obtener la ubicación. Por favor, verifica la configuración de ubicación.'
-                                    );
+                                );
                             });
                             event.preventDefault(); // Previene el envío del formulario hasta que se obtengan las coordenadas
                         } else {

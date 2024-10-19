@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Grupo Codware | Listado de Asistencia</title>
+    <title>Listado de Asistencia</title>
 @endsection
 
 @section('styles')
@@ -64,7 +64,8 @@
                 <!-- Filtro Fecha Exacta -->
                 <div class="form-group col-lg-3 col-md-6">
                     <label for="desde" class="m-0 label-primary">Desde</label>
-                    <input type="date" class="form-control-m form-control-lg" id="desde" value="{{ Date('2020-m-d') }}">
+                    <input type="date" class="form-control-m form-control-lg" id="desde"
+                        value="{{ Date('2020-m-d') }}">
                 </div>
                 <div class="form-group col-lg-3 col-md-6">
                     <label for="hasta" class="m-0 label-primary">Hasta</label>
@@ -84,6 +85,14 @@
             </div>
         </div>
         <br>
+        <script>
+            document.getElementById('dni').addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9]/g, ''); // Solo permite números
+            });
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("dni").focus();
+            });
+        </script>
         <section class="content-header">
             @csrf
             <div class="row">

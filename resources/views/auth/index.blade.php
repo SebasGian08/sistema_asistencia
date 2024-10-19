@@ -122,11 +122,15 @@
 
         <header class="main-header">
             <div class="inside-header">
-                {{-- <a href="{{ route('auth.inicio') }}" class="logo">
-                    <span class="logo-m">
-                        <img src="https://grupocodware.com/images/logo-2.webp" alt="logo" class="light-logo">
-                    </span>
-                </a> --}}
+
+                @if ($empresa && $empresa->logo)
+                    <a href="{{ route('auth.inicio') }}" class="logo">
+                        <span class="logo-m">
+                            <img src="{{ asset($empresa->logo) }}" alt="Logo de la Empresa" class="light-logo"
+                                style="max-width: 150px; max-height: 150px;">
+                        </span>
+                    </a>
+                @endif
                 <nav class="navbar navbar-static-top">
                     <a href="#" class="sidebar-toggle d-block d-lg-none" data-toggle="push-menu" role="button"
                         style="color: #ffffff;">
@@ -242,6 +246,12 @@
                                             <i class="fa fa-calendar mr-5"></i> Horas Extras
                                         </a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('auth.memorandum') }}">
+                                            <i class="fa fa-hourglass-half mr-5"></i> Memorándum Por Tardanza
+                                        </a>
+                                    </li>
+
 
                                 </ul>
                             </li>
@@ -270,8 +280,12 @@
                                 <ul class="dropdown-menu multilevel scale-up-left">
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('auth.configuracion') }}">
-                                            <i class="fa fa-desktop mr-5"></i> IP
+                                            <i class="fa fa-desktop mr-5"></i> Añadir IP
                                         </a>
+                                        <a class="nav-link" href="{{ route('auth.datos') }}">
+                                            <i class="fa fa-cog mr-5"></i> Configuración
+                                        </a>
+
                                     </li>
                                 </ul>
                             </li>

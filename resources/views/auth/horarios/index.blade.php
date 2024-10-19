@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Codware | Registro de Horarios</title>
+    <title>Registro de Horarios</title>
 @endsection
 
 @section('styles')
@@ -24,7 +24,7 @@
 
         <section class="content-header">
             <h1>
-                {{-- Horarios --}}
+                Gestión de Horarios
             </h1>
         </section>
 
@@ -77,6 +77,11 @@
                             <input autocomplete="off" type="time" class="form-control form-control-lg" id="salida"
                                 name="salida" placeholder="Ingrese hora de salida" required>
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                document.getElementById("ingreso").focus();
+                            });
+                        </script>
                         <div class="form-group col-lg-6 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary btn-lg" style="font-size: 16px;">
                                 <i class="fa fa-save"></i> Registrar Horario

@@ -1390,18 +1390,19 @@ header .notifications-menu ul.dropdown-menu li ul li a i {
     text-rendering: optimizeLegibility;
     text-transform: none;
     -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased;    
     font-smoothing: antialiased;
     content: "\e903";
     color: #ffffff
 }
 
 .main-nav nav .dropdown-menu.multilevel a {
-    color: #67757c
+    color: #585858
 }
 
 .main-nav nav .dropdown-menu.multilevel a:hover {
-    color: #2ecc71
+    color: #2ecc71;
+    background-color: #ebebeb86 !important;
 }
 
 #tableDescripcion td,

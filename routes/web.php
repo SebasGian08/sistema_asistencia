@@ -166,7 +166,6 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::post('/update', 'Auth\EmpleadoController@update')->name('auth.empleado.update');
         Route::get('/generate-carnet', 'Auth\EmpleadoController@generateCarnet')->name('auth.empleado.generateCarnet');
         Route::get('/partialViewCarnet/{id}', 'Auth\EmpleadoController@partialViewCarnet')->name('auth.empleado.create');
-
     });
     
 
@@ -208,6 +207,25 @@ Route::group(['prefix' => 'auth', 'middleware' => 'auth:web'], function () {
         Route::get('/partialView/{id}', 'Auth\ConfiguracionController@partialView')->name('auth.configuracion.create');
         Route::post('/update', 'Auth\ConfiguracionController@update')->name('auth.configuracion.update');
     });
+
+    Route::group(['prefix' => 'memorandum'], function () {
+        Route::get('/', 'Auth\MemorandumController@index')->name('auth.memorandum');
+        Route::get('/list_all', 'Auth\MemorandumController@list_all')->name('auth.memorandum.list_all');
+        Route::post('/buscar-dni', 'Auth\MemorandumController@buscarDNI')->name('auth.memorandum.buscar_dni');
+        Route::post('/delete', 'Auth\MemorandumController@delete')->name('auth.memorandum.delete');
+        Route::post('/store', 'Auth\MemorandumController@store')->name('auth.memorandum.store');
+        // Nueva ruta para generar el PDF
+        Route::get('/generar-pdf/{id}', 'Auth\MemorandumController@generarPDF')->name('auth.memorandum.generar_pdf');
+    });
+    
+
+    Route::group(['prefix' => 'datos'], function () {
+        Route::get('/', 'Auth\DatosController@index')->name('auth.datos');
+        Route::get('/list_all', 'Auth\DatosController@list_all')->name('auth.datos.list_all');
+        Route::post('/update', 'Auth\DatosController@update')->name('auth.datos.update');
+
+    });
+    
     
 
 });

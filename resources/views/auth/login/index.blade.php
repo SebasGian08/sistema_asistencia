@@ -7,7 +7,7 @@
     <meta name="Resource-type" content="Document">
     <meta http-equiv="X-UA-Compatible" content="IE=5; IE=6; IE=7; IE=8; IE=9; IE=10">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>JAC | Administrador</title>
+    <title>Ingresar | Control de Asistencia</title>
     <link rel="stylesheet" href="{{ asset('auth/css/login/index.min.css') }}">
 </head>
 
@@ -16,7 +16,9 @@
     <section class="login">
         <div class="wrap-content">
             <div class="form-logo">
-                <img src="{{ asset('app/img/logojac.png') }}" alt="JAC" style="width:30px;">
+                @if ($empresa && $empresa->logo)
+                    <img src="{{ asset($empresa->logo) }}" alt="JAC" style="width:80px;">
+                @endif
             </div>
             <h3 class="form-title">Iniciar Sesión</h3>
             <form method="post" action="{{ route('auth.login.post') }}">
@@ -40,7 +42,7 @@
                         </span>
                     @endif
                 </div>
-                
+
                 <script>
                     document.getElementById('togglePassword').addEventListener('click', function() {
                         const passwordInput = document.getElementById('password');
@@ -49,25 +51,28 @@
                         this.textContent = type === 'password' ? '👁️' : '🙈'; // Cambia el ícono según el estado
                     });
                 </script>
-                
+
                 <style>
                     .position-relative {
                         position: relative;
                     }
+
                     .toggle-password {
                         position: absolute;
-                        right: 10px; /* Ajusta según sea necesario */
+                        right: 10px;
+                        /* Ajusta según sea necesario */
                         top: 50%;
                         transform: translateY(-50%);
                         cursor: pointer;
-                        user-select: none; /* Evita que el texto sea seleccionado al hacer clic */
+                        user-select: none;
+                        /* Evita que el texto sea seleccionado al hacer clic */
                     }
                 </style>
-                
-                <button type="submit" class="button">Ingresar Sesión</button>
+
+                <button type="submit" class="button">Iniciar Sesión</button>
                 <br>
-                    {{-- Se Aumento  --}}
-                 <a href="{{ route('index') }}" class="return-label">Regresar a la página principal</a>
+                {{-- Se Aumento  --}}
+                <a href="{{ route('index') }}" class="return-label">Regresar a la página principal</a>
             </form>
         </div>
     </section>

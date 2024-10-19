@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Codware | Registro de Empleado</title>
+    <title>Registro de Empleado</title>
 @endsection
 
 @section('styles')
@@ -81,6 +81,9 @@
                         <script>
                             document.getElementById('dni').addEventListener('input', function(e) {
                                 this.value = this.value.replace(/[^0-9]/g, ''); // Solo permite números
+                            });
+                            document.addEventListener("DOMContentLoaded", function() {
+                                document.getElementById("dni").focus();
                             });
                         </script>
 

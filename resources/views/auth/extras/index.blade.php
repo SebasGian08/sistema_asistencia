@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Grupo Codware | Horas Extras</title>
+    <title>Horas Extras</title>
 @endsection
 
 @section('styles')
@@ -45,7 +45,7 @@
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                {{-- Horas Extras --}}
+                Horas Extras
                 {{-- <small>Mantenimiento</small> --}}
             </h1>
             <ol class="breadcrumb">

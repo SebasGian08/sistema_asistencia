@@ -1,7 +1,7 @@
 @extends('auth.index')
 
 @section('titulo')
-    <title>Codware | Registro de Cargo</title>
+    <title>Registro de Cargo</title>
 @endsection
 
 @section('styles')
@@ -24,7 +24,7 @@
 
         <section class="content-header">
             <h1>
-                {{-- Gestión de Empleados --}}
+                Gestión de Cargos
             </h1>
         </section>
 
@@ -70,6 +70,11 @@
                             <input autocomplete="off" type="text" class="form-control form-control-lg" id="nombre"
                                 name="nombre" placeholder="Ingrese nombre" required>
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                document.getElementById("nombre").focus();
+                            });
+                        </script>
                         <div class="form-group col-lg-6 d-flex align-items-end">
                             <button type="submit" class="btn btn-primary btn-lg " style="font-size: 16px;">
                                 <i class="fa fa-save"></i> Registrar Cargo
